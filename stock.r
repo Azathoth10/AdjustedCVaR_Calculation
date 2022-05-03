@@ -39,3 +39,14 @@ s0 <- matrix(df %>% slice(nrow(df)))
 rownames(s0) <- colnames(data)
 colnames(s0) <- ("Current Prices")
 
+################Cholesky Decomposition###############################################
+
+cdcorr_t <- chol(corr)
+cdcorr <- t(cdcorr_t)
+cdcorr %*% cdcorr_t
+
+################Standard Normal Variates#############################################
+
+normvars <- rnorm(nrow(corr))
+corrWiener <- cdcorr%*% normvars
+
