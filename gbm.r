@@ -10,9 +10,14 @@
 
 GBMf <- function(s0, t, m, sig, ch, dt = 1./365){
   
-  path <- cbind(s0, matrix(0, nrow(ch), t))
+  normvars <- matrix(0, nrow(s0), t)
+  for(i in seq(from = 1, to = t, by = 1)){
+    r <- rnorm(nrow(s0))
+    normvars[,i] <- r
+  }
   
-  normvars <- matrix(rnorm(nrow(ch), nrow(ch), t))
+  path <- cbind(s0, matrix(0, nrow(s0), t))
+  
   
   
   for(i in seq(from = 1, to = t, by = 1)){
@@ -21,7 +26,7 @@ GBMf <- function(s0, t, m, sig, ch, dt = 1./365){
     rand <- sig*sqrt(dt)*cw
     drift <- (m - (sig^2)/2)*dt
     
-    st <- path[i]*exp(drift + rand) 
+    st <- as.numeric(path[,i])*exp(drift + rand) 
     path[,i+1] <- st
     
   }

@@ -19,23 +19,29 @@ rownames(data) <- data$Date
 data$Date <- NULL
 head(data)
 
-###############Calculating Returns and Covariance Matrix#############################
+###############Calculating Returns/stds and Covariance Matrix#############################
 
 corr <- cor(data)
 
 rets <- c()
+sigmas <- c()
 for(i in colnames(data)[1:length(colnames(data))]){
   v <- as.vector(unlist(data[i]))
   rets <- c(rets, mean(v))
+  sigmas <- c(sigmas, sd(v))
 }
 rets <- matrix(rets)
 rownames(rets) <- colnames(data)
 colnames(rets) <- ("Returns")
 
+sigmas <- matrix(sigmas)
+rownames(sigmas) <- colnames(data)
+colnames(sigmas) <- ("Standard Deviations")
+
 ################Current stock returns################################################
 
 df$Date <- NULL
-s0 <- matrix(df %>% slice(nrow(df)))
+s0 <- matrix(df[nrow(df),])
 rownames(s0) <- colnames(data)
 colnames(s0) <- ("Current Prices")
 
@@ -49,4 +55,10 @@ cdcorr %*% cdcorr_t
 
 normvars <- rnorm(nrow(corr))
 corrWiener <- cdcorr%*% normvars
+
+print(cdcorr)
+print(s0)
+print(rets)
+print(sigmas)
+
 
