@@ -52,9 +52,8 @@ cdcorr <- t(cdcorr_t)
 cdcorr %*% cdcorr_t
 
 ################Standard Normal Variates#############################################
-
-normvars <- rnorm(nrow(corr))
-corrWiener <- cdcorr%*% normvars
+#normvars <- rnorm(nrow(corr))
+#corrWiener <- cdcorr%*% normvars
 
 print(cdcorr)
 print(s0)
