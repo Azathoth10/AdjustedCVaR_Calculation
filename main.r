@@ -12,11 +12,16 @@ for(i in colnames(paths)[1:length(colnames(paths))]){
 
 data1 <- data1[-1]
 
+weightseq <- matrix(1/(length(data1)), length(data1)) 
+
+finalrets <- c()
+
 for( i  in seq(from =1, to = nrow(data1), by = 1)){
   
-  pr <- data1[i,]/length(data[i,])
-  data1[i,] <- pr
+  pr <- as.matrix(data1[i,])%*%weightseq
+  finalrets <- c(finalrets, pr)
   
 }
 
-
+sorted_returns <- sort(finalrets, decreasing = FALSE)
+n_quant <- length(sorted_returns)*0.05
