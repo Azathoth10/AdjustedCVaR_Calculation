@@ -1,14 +1,16 @@
-source("gbm.r")
-source("stock.r")
+####Look INput for gbm function and alfa for confidence
+####Output########
+####Adjusted CVaR for one set of paths
 
-Adj_CVaR <- c()
 
-nsim <- 1000
 
-for(i in c(1:nsim)){
+CVaR_Function <- function(rets, sigmas, cdcorr, s0,alfa){
+  
+  ###Running GBM for paths
   
   paths<-data.frame(t(GBMf(s0, 250, rets, sigmas, cdcorr)))
   
+  ###Returns from prices
   
   data1 <- data.frame(c(2:nrow(paths)-1))
   for(i in colnames(paths)[1:length(colnames(paths))]){
@@ -18,6 +20,8 @@ for(i in c(1:nsim)){
   }
   
   data1 <- data1[-1]
+  
+  ###Equally weighted portfolio ########################################To be changed in future to add the option to choose
   
   weightseq <- matrix(1/(length(data1)), length(data1)) 
   
@@ -30,16 +34,15 @@ for(i in c(1:nsim)){
     
   }
   
+  ###Returns sorted from smallest to largest and the first 5% are chosen
+  ###weighted average of the first values
+  ###the VaR value has the largest weight until the smallest return with the lowest weight
+  
   sorted_returns <- sort(finalrets, decreasing = FALSE)
-  n_quant <- round(length(sorted_returns)*0.05,0)
+  n_quant <- round(length(sorted_returns)*alfa,0)
   CVaR_Interval <- sorted_returns[1:n_quant]
   CVaR_weights <- c(1:length(CVaR_Interval))
   Adjusted_CVaR <- weighted.mean(CVaR_Interval, CVaR_weights)
   
-  Adj_CVaR <- c(Adj_CVaR, Adjusted_CVaR)
-  
+  Adjusted_CVaR
 }
-
-Final_AdjCVaR <- -mean(Adj_CVaR)*100
-
-Final_AdjCVaR

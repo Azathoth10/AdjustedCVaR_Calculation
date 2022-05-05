@@ -8,6 +8,9 @@
 #ch####Lower triangular cholesky times correlation matrix
 #dt####time intervals
 
+#tickers to choose as inputs for future changes ################################
+
+
 GBMf <- function(s0, t, m, sig, ch, dt = 1./365){
   
   normvars <- matrix(0, nrow(s0), t)
