@@ -3,6 +3,7 @@ source("stock.r")
 
 paths<-data.frame(t(GBMf(s0, 250, rets, sigmas, cdcorr)))
 
+
 data1 <- data.frame(c(2:nrow(paths)-1))
 for(i in colnames(paths)[1:length(colnames(paths))]){
   v = as.vector(unlist(paths[i]))
@@ -24,4 +25,10 @@ for( i  in seq(from =1, to = nrow(data1), by = 1)){
 }
 
 sorted_returns <- sort(finalrets, decreasing = FALSE)
-n_quant <- length(sorted_returns)*0.05
+n_quant <- round(length(sorted_returns)*0.05,0)
+CVaR_Interval <- sorted_returns[1:n_quant]
+CVaR_weights <- c(1:length(CVaR_Interval))
+Adjusted_CVaR <- weighted.mean(CVaR_Interval, CVaR_weights)
+
+
+
