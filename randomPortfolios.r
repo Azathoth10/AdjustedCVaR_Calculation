@@ -1,17 +1,27 @@
-rnd01 <- c()
+library(openssl)
 
-for( i in c(1:100)){
+#######Function Generating n random numbers
+
+RWgenerators <- function(nsim, nweights){
   
-  r <- as.numeric(rand_bytes(5)) 
-  r <- r/sum(r)
   
+  rnd01 <- c()
   
-  rnd01 <- rbind(rnd01, r)
+  for( i in c(1:nsim)){
+    
+    r <- as.numeric(rand_bytes(nweights)) 
+    r <- r/sum(r)
+    
+    
+    rnd01 <- rbind(rnd01, r)
+    
+  }
+  
+  rnd01 <- as.matrix(rnd01)
   
 }
 
-rnd01 <- as.matrix(rnd01)
-  
-sum(rnd01[50])
-rnd01[]
+
+
+
 
