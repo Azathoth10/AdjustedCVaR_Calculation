@@ -4,7 +4,7 @@
 
 
 
-CVaR_Function <- function(rets, sigmas, cdcorr, s0,alfa){
+CVaR_Function <- function(rets, sigmas, cdcorr, s0,alfa, weights){
   
   ###Running GBM for paths
   
@@ -23,13 +23,13 @@ CVaR_Function <- function(rets, sigmas, cdcorr, s0,alfa){
   
   ###Equally weighted portfolio ########################################To be changed in future to add the option to choose
   
-  weightseq <- matrix(1/(length(data1)), length(data1)) 
+  #weightseq <- matrix(1/(length(data1)), length(data1)) 
   
   finalrets <- c()
   
   for( i  in seq(from =1, to = nrow(data1), by = 1)){
     
-    pr <- as.matrix(data1[i,])%*%weightseq
+    pr <- as.matrix(data1[i,])%*%weights
     finalrets <- c(finalrets, pr)
     
   }
