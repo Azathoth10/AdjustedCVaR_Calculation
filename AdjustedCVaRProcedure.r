@@ -4,11 +4,11 @@
 
 
 
-CVaR_Function <- function(rets, sigmas, cdcorr, s0,alfa, weights){
+CVaR_Function <- function(rets, sigmas, cdcorr, s0,alfa, weights, nperiods){
   
   ###Running GBM for paths
   
-  paths<-data.frame(t(GBMf(s0, 250, rets, sigmas, cdcorr)))
+  paths<-data.frame(t(GBMf(s0, nperiods, rets, sigmas, cdcorr)))
   
   ###Returns from prices
   

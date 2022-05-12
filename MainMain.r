@@ -2,7 +2,7 @@ source("gbm.r")
 source("impstocks.r")
 
 TKs <- c("^GSPC", "EEM", "VGK", "SPMO", "IJR", "AIA")
-start <- "2021-05-03"
+start <- "2017-05-03"
 
 df <- GetStocks(TKs, start)
 
@@ -15,9 +15,10 @@ source("randomPortfolios.r")
 library(ggplot2)
 
 alfa <- 0.05
-nsim_CVaR <- 10
+nsim_CVaR <- 1000
+nperiods <- nrow(df)
 
-rw <- RWgenerators(10, length(TKs))
+rw <- RWgenerators(10000, length(TKs))
 
 ESWeights <- c()
 retsweights <- c()
@@ -27,7 +28,7 @@ Sharpe <- c()
 for(i in c(1:nrow(rw))){
   
   
-  ES <- Final_AdjCVaR_Function(rets, sigmas, cdcorr, s0, alfa, rw[i,], nsim_CVaR)
+  ES <- Final_AdjCVaR_Function(rets, sigmas, cdcorr, s0, alfa, rw[i,], nsim_CVaR, nperiods)
   ESWeights <- c(ESWeights, ES)
   
   rs <- (sum(rets * rw[i,]))*100

@@ -23,6 +23,8 @@ for(i in colnames(df)[1:length(colnames(df))]){
   data[i] <- vr
 }
 
+data <- slice(data, 1:(n() - 1)) 
+
 
 #rownames(data) <- data$Date
 data$To_remove <- NULL

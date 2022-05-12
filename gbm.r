@@ -11,19 +11,19 @@
 #tickers to choose as inputs for future changes ################################
 
 
-GBMf <- function(s0, t, m, sig, ch, dt = 1./365){
+GBMf <- function(s0, nperiods, m, sig, ch, dt = 1./365){
   
-  normvars <- matrix(0, nrow(s0), t)
-  for(i in seq(from = 1, to = t, by = 1)){
+  normvars <- matrix(0, nrow(s0), nperiods)
+  for(i in seq(from = 1, to = nperiods, by = 1)){
     r <- rnorm(nrow(s0))
     normvars[,i] <- r
   }
   
-  path <- cbind(s0, matrix(0, nrow(s0), t))
+  path <- cbind(s0, matrix(0, nrow(s0), nperiods))
   
   
   
-  for(i in seq(from = 1, to = t, by = 1)){
+  for(i in seq(from = 1, to = nperiods, by = 1)){
     cw <- ch %*% normvars[,i]
     
     rand <- sig*sqrt(dt)*cw

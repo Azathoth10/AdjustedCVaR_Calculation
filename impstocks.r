@@ -5,7 +5,7 @@ GetStocks <- function(TKS, start){
   
   FirstS <-as.data.frame(lapply(TKs[1], function(x) {getSymbols(x, 
                                                                 from = start, 
-                                                                periodicity = "daily",
+                                                                periodicity = "monthly",
                                                                 auto.assign=FALSE)} ))
   
   df <- data.frame(FirstS[4])
@@ -14,7 +14,7 @@ GetStocks <- function(TKS, start){
     
     myStocks2 <-as.data.frame(lapply(i, function(x) {getSymbols(x, 
                                                                 from = start, 
-                                                                periodicity = "daily",
+                                                                periodicity = "monthly",
                                                                 auto.assign=FALSE)} ))
     
     df <- cbind(df, myStocks2[4])
