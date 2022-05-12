@@ -1,15 +1,23 @@
 source("gbm.r")
+source("impstocks.r")
+
+TKs <- c("^GSPC", "EEM", "VGK", "SPMO", "IJR", "AIA")
+start <- "2021-05-03"
+
+df <- GetStocks(TKs, start)
+
 source("stock.r")
 source("AdjustedCVaRProcedure.r")
 source("AdjCVaRF.r")
 source("randomPortfolios.r")
 
+
 library(ggplot2)
 
 alfa <- 0.05
-nsim_CVaR <- 100
+nsim_CVaR <- 10
 
-rw <- RWgenerators(10000, 5)
+rw <- RWgenerators(10, length(TKs))
 
 ESWeights <- c()
 retsweights <- c()

@@ -1,22 +1,33 @@
 library(dplyr)
 
+
 ###############Importing dataset####################################################
 
-df <- read.csv("Stocks1.csv")
 head(df)
 
 ###############Transforming Prices to returns#######################################
 
-data <- data.frame(df["Date"])
-data <- slice(data, 1:(n()-1))
-for(i in colnames(df)[2:length(colnames(df))]){
+##data <- data.frame(df["Date"])
+##data <- slice(data, 1:(n()-1))
+##for(i in colnames(df)[2:length(colnames(df))]){
+##  v = as.vector(unlist(df[i]))
+##  vr = diff(v)/(v[-length(v)])
+##  data[i] <- vr
+#}
+
+data <- data.frame(c(2:nrow(df)-1))
+colnames(data) <- "To_remove"
+for(i in colnames(df)[1:length(colnames(df))]){
   v = as.vector(unlist(df[i]))
   vr = diff(v)/(v[-length(v)])
   data[i] <- vr
 }
 
-rownames(data) <- data$Date
-data$Date <- NULL
+
+#rownames(data) <- data$Date
+data$To_remove <- NULL
+
+colnames(data) <- TKs
 head(data)
 
 ###############Calculating Returns/stds and Covariance Matrix#############################
